@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.Flow
 interface FavoriteRepository {
 
     fun favoriteCityList(): Flow<City>
-    fun observeIsFavorite(cityId: Int): Flow<Boolean>
-    suspend fun addToFavList(cityId: Int)
-    suspend fun deleteFromFavList(cityId: Int)
+    fun observeIsFavorite(cityId: String): Flow<Boolean>
+    suspend fun addToFavList(cityId: String)
+    suspend fun deleteFromFavList(cityId: String)
 
 }

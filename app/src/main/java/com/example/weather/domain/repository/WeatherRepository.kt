@@ -8,5 +8,5 @@ interface WeatherRepository {
 
     fun getForecast(city: City): Forecast
 
-    suspend fun getWeather(idCity: Int): Weather
+    suspend fun getWeather(idCity: String): Weather
 }

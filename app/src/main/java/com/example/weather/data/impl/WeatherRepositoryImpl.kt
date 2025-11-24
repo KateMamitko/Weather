@@ -10,7 +10,7 @@ class WeatherRepositoryImpl : WeatherRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getWeather(idCity: Int): Weather {
+    override suspend fun getWeather(idCity: String): Weather {
         TODO("Not yet implemented")
     }
 }
