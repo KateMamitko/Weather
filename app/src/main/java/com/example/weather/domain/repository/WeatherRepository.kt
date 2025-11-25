@@ -6,7 +6,6 @@ import com.example.weather.domain.entety.Weather
 
 interface WeatherRepository {
 
-    fun getForecast(city: City): Forecast
-
+    suspend fun getForecast(city: City): Forecast
     suspend fun getWeather(idCity: String): Weather
 }
