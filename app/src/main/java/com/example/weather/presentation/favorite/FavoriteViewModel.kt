@@ -1,6 +1,7 @@
 package com.example.weather.presentation.favorite
 
 import androidx.lifecycle.ViewModel
+import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.example.weather.domain.usecase.GetCurrentWeatherUseCase
 import com.example.weather.domain.usecase.GetFavoriteCityListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +16,7 @@ import javax.inject.Inject
 class FavoriteViewModel @Inject constructor(
     private val getFavoriteCityListUseCase: GetFavoriteCityListUseCase,
     private val getCurrentWeatherUseCase: GetCurrentWeatherUseCase
-) : ViewModel(), ContainerHost<FavoriteState, FavoriteSideEffect> {
+) : ViewModel(), ContainerHost<FavoriteState, FavoriteSideEffect>, InstanceKeeper.Instance {
 
 
     override val container =

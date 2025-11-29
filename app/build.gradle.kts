@@ -72,7 +72,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
 
-    implementation("com.arkivanov.decompose:decompose:3.4.0")
+    implementation("com.arkivanov.decompose:decompose:2.2.3")
     implementation("com.arkivanov.decompose:extensions-compose-jetbrains:2.2.3")
 
     implementation("org.orbit-mvi:orbit-core:6.0.0")

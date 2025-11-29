@@ -1,6 +1,7 @@
 package com.example.weather.presentation.details
 
 import androidx.lifecycle.ViewModel
+import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.example.weather.domain.entety.City
 import com.example.weather.domain.usecase.AddToFevListUseCase
 import com.example.weather.domain.usecase.DeleteFromFavListUseCase
@@ -22,7 +23,7 @@ class DetailsViewModel @Inject constructor(
     private val observeIsFavoriteUseCase: ObserveIsFavoriteUseCase,
     private val getForecastUseCase: GetForecastUseCase
 ) : ViewModel(),
-    ContainerHost<DetailsState, DetailsSideEffects> {
+    ContainerHost<DetailsState, DetailsSideEffects>, InstanceKeeper.Instance {
 
     override val container: Container<DetailsState, DetailsSideEffects>
         get() = container(
