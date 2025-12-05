@@ -1,8 +1,13 @@
 package com.example.weather.module
 
+import android.content.Context
+import androidx.room.Room
+import com.example.weather.BuildConfig
 import com.example.weather.data.impl.FavoriteRepositoryImpl
 import com.example.weather.data.impl.SearchRepositoryImpl
 import com.example.weather.data.impl.WeatherRepositoryImpl
+import com.example.weather.data.local.FavoriteCityDao
+import com.example.weather.data.local.FavoriteDatabase
 import com.example.weather.data.network.ApiService
 import com.example.weather.domain.repository.FavoriteRepository
 import com.example.weather.domain.repository.SearchRepository
@@ -11,9 +16,9 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -46,11 +51,17 @@ object NetworkModule {
     @Provides
     @Singleton
     fun okhttpClient(): OkHttpClient = OkHttpClient.Builder()
-        .addInterceptor(
-            HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BASIC
-            }
-        ).build()
+        .addInterceptor { it ->
+            val originalRequest = it.request()
+            val newRequest = originalRequest
+                .url
+                .newBuilder()
+                .addQueryParameter("key", BuildConfig.WEATHER_API_KEY)
+                .build()
+            val newRes = originalRequest.newBuilder().url(newRequest).build()
+            it.proceed(newRes)
+        }
+        .build()
 
     @Provides
     @Singleton
@@ -63,4 +74,26 @@ object NetworkModule {
     @Provides
     @Singleton
     fun apiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
+}
+
+
+@Module
+@InstallIn(SingletonComponent::class)
+object DatabaseModule {
+
+    @Provides
+    @Singleton
+    fun provideDatabase(@ApplicationContext context: Context): FavoriteDatabase {
+        return Room.databaseBuilder(
+            context,
+            FavoriteDatabase::class.java,
+            "FavoriteDatabase"
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDatabaseDao(db: FavoriteDatabase) : FavoriteCityDao{
+        return db.favoriteCityDao()
+    }
 }
