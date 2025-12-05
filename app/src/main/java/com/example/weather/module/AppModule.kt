@@ -97,5 +97,3 @@ object DatabaseModule {
         return db.favoriteCityDao()
     }
 }
-
-
