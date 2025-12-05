@@ -15,8 +15,8 @@ interface ApiService {
     ): CurrentWeatherDto
 
     @GET("forecast.json")
-    suspend fun loadCurrentWaether(@Query("q") q: String): WeatherCurrentDto
+    suspend fun currentWeather(@Query("q") q: String): WeatherCurrentDto
 
     @GET("search.json")
-    suspend fun searchCity(@Query("q") q: String): CityDto
+    suspend fun searchCity(@Query("q") q: String): List<CityDto>
 }

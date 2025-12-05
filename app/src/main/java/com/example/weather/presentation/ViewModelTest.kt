@@ -12,7 +12,7 @@ class ViewModelTest @Inject constructor(val apiService: ApiService) : ViewModel(
 
     fun load() {
         viewModelScope.launch {
-            val str = apiService.loadCurrentWaether("London")
+            val str = apiService.currentWeather("London")
             println("str - $str")
         }
     }

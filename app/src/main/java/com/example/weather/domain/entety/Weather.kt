@@ -1,9 +1,9 @@
 package com.example.weather.domain.entety
 
-import android.icu.util.Calendar
+import java.util.Calendar
+
 
 data class Weather(
-    val city: String,
     val temperature: Float,
     val description: String,
     val conditionUrl: String,
