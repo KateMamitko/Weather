@@ -2,6 +2,7 @@ package com.example.weather.presentation.search
 
 import com.example.weather.domain.entety.City
 
+
 sealed interface SearchSideEffects {
 
     data object OnBack : SearchSideEffects

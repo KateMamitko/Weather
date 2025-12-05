@@ -4,12 +4,14 @@ import android.content.Context
 import androidx.room.Room
 import com.example.weather.BuildConfig
 import com.example.weather.data.impl.FavoriteRepositoryImpl
+import com.example.weather.data.impl.LocationRepositoryImpl
 import com.example.weather.data.impl.SearchRepositoryImpl
 import com.example.weather.data.impl.WeatherRepositoryImpl
 import com.example.weather.data.local.FavoriteCityDao
 import com.example.weather.data.local.FavoriteDatabase
 import com.example.weather.data.network.ApiService
 import com.example.weather.domain.repository.FavoriteRepository
+import com.example.weather.domain.repository.LocationRepository
 import com.example.weather.domain.repository.SearchRepository
 import com.example.weather.domain.repository.WeatherRepository
 import dagger.Binds
@@ -41,7 +43,14 @@ abstract class AppModule {
     @Binds
     @Singleton
     abstract fun provideWeatherRepositoryImpl(impl: WeatherRepositoryImpl): WeatherRepository
+
+    @Binds
+    @Singleton
+    abstract fun provideLocationService(
+        impl: LocationRepositoryImpl
+    ): LocationRepository
 }
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -93,7 +102,7 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideDatabaseDao(db: FavoriteDatabase) : FavoriteCityDao{
+    fun provideDatabaseDao(db: FavoriteDatabase): FavoriteCityDao {
         return db.favoriteCityDao()
     }
 }

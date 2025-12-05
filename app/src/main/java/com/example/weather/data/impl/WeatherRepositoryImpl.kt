@@ -12,7 +12,8 @@ import javax.inject.Inject
 class WeatherRepositoryImpl @Inject constructor(private val apiService: ApiService) :
     WeatherRepository {
     override suspend fun getForecast(city: City): Forecast {
-        return apiService.loadForecastList(city).toDomain()
+        val s = apiService.loadForecastList(city)
+        return s.toDomain()
     }
 
     override suspend fun getWeather(idCity: String): Weather {

@@ -2,6 +2,7 @@ package com.example.weather.presentation.details
 
 import com.example.weather.domain.entety.City
 
+
 sealed interface DetailsEvents {
 
     data object ClickOnBack : DetailsEvents

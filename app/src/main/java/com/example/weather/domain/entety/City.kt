@@ -1,4 +1,8 @@
 package com.example.weather.domain.entety
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-data class City(val id: String, val cityName: String, val country: String)
+
+@Parcelize
+data class City(val id: String, val cityName: String, val country: String) : Parcelable

@@ -13,7 +13,7 @@ interface FavoriteCityDao {
     @Query("SELECT * FROM city")
     fun getFavoriteCity(): Flow<List<CityDbModel>>
 
-    @Query("SELECT EXISTS (SELECT * FROM city WHERE id=:idCity LIMIT 1)")
+    @Query("SELECT COUNT(*) > 0 FROM city WHERE id = :idCity")
     fun observeIsFollowing(idCity: String): Flow<Boolean>
 
     @Query("DELETE FROM city WHERE id=:cityId")

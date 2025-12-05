@@ -1,10 +1,11 @@
 package com.example.weather.presentation.details
 
+import com.example.weather.domain.entety.City
 import com.example.weather.domain.entety.Forecast
 
 data class DetailsState(
     var isFavorite: Boolean,
-    val cityName: String,
+    val city: City,
     val forecastState: ForecastState
 ) {
 

@@ -7,13 +7,14 @@ import com.example.weather.domain.entety.City
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class DefaultSearchComponent (
+class DefaultSearchComponent(
     val context: ComponentContext,
     val viewModel: SearchViewModel,
     val onBack: () -> Unit,
     val openForecast: (City) -> Unit,
     val saveToFavorite: () -> Unit,
     val showErrorMessage: (String) -> Unit,
+    val reason: OpenReason
 ) : SearchComponent,
     ComponentContext by context {
     val state = instanceKeeper.getOrCreate { viewModel }
@@ -33,6 +34,9 @@ class DefaultSearchComponent (
 
     override val model: StateFlow<SearchState>
         get() = state.container.stateFlow
+
+    override val openReason: OpenReason
+        get() = reason
 
     override fun changeSearchQuery(query: String) {
         viewModel.onEvent(SearchEvents.ChangeSearchQuery(query))
