@@ -2,9 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kotlin.serialization)
     kotlin("kapt")
     alias(libs.plugins.hilt)
+    id("kotlin-parcelize")
 
 }
 
@@ -69,9 +69,6 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
     kapt(libs.hilt.compiler)
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
-
     implementation("com.arkivanov.decompose:decompose:2.2.3")
     implementation("com.arkivanov.decompose:extensions-compose-jetbrains:2.2.3")
 
@@ -84,10 +81,14 @@ dependencies {
     kapt("androidx.room:room-compiler:2.8.4")
 
     implementation("com.github.bumptech.glide:compose:1.0.0-beta08")
+    implementation("androidx.compose.material:material-icons-extended:1.7.8")
 
     implementation("com.squareup.retrofit2:retrofit:3.0.0")
     implementation("com.squareup.retrofit2:converter-gson:3.0.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
+    implementation("com.google.android.gms:play-services-location:21.3.0")
+    implementation("com.google.accompanist:accompanist-permissions:0.37.3")
 }
 
 kapt {

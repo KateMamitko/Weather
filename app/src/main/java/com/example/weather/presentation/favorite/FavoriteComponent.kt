@@ -10,4 +10,6 @@ interface FavoriteComponent {
     fun onClickSearch()
     fun onClickAddFavorite()
     fun clickToItemCity(city: City)
+    fun getLocation()
+    fun load()
 }

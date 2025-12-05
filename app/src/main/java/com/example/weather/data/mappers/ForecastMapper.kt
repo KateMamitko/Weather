@@ -3,16 +3,17 @@ package com.example.weather.data.mappers
 
 import com.example.weather.data.network.dto.CurrentWeatherDto
 import com.example.weather.data.network.dto.ForecastDto
+import com.example.weather.data.network.dto.LocationDto
 import com.example.weather.data.network.dto.WeatherCurrentDto
 import com.example.weather.data.network.dto.WeatherDto
 import com.example.weather.domain.entety.Forecast
+import com.example.weather.domain.entety.MyLocationWeather
 import com.example.weather.domain.entety.Weather
 import java.util.Calendar
 
 fun CurrentWeatherDto.toDomain() = Forecast(
     currentWeather = this.currentWeather.toDomain(),
-    upcoming = this.forecastList.listWeather.drop(1)
-        .toDomain() // 1 день прогнозів буде в currentWeather
+    upcoming = this.forecastList.listWeather.drop(1).toDomain()
 )
 
 fun WeatherCurrentDto.toWeather() = Weather(
@@ -21,6 +22,14 @@ fun WeatherCurrentDto.toWeather() = Weather(
     conditionUrl = this.currentWeather.condition.icon.buildUrl(),
     isFavorite = false,
     date = this.currentWeather.date.createCalendar()
+)
+
+fun LocationDto.toDomain() = MyLocationWeather(
+    cityId = this.location.id,
+    cityName = this.location.name,
+    country = this.location.country,
+    temperature = this.currentWeather.temperature,
+    conditionUrl = this.currentWeather.condition.icon,
 )
 
 fun WeatherDto.toDomain() = Weather(

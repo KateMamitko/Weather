@@ -7,7 +7,7 @@ import com.example.weather.domain.entety.City
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class DefaultDetailsComponent (
+class DefaultDetailsComponent(
     val city: City,
     val componentContext: ComponentContext,
     val viewModel: DetailsViewModel,
@@ -19,6 +19,8 @@ class DefaultDetailsComponent (
     val state = instanceKeeper.getOrCreate { viewModel }
 
     init {
+        viewModel.load(city)
+
         componentScope().launch {
             state.container.sideEffectFlow.collect {
                 when (it) {

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.arkivanov.decompose.defaultComponentContext
 import com.example.weather.presentation.details.DetailsViewModel
 import com.example.weather.presentation.favorite.FavoriteViewModel
@@ -15,13 +15,12 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val viewModel: DetailsViewModel by viewModels()
-            val viewModel2: FavoriteViewModel by viewModels()
-            val viewModel3: SearchViewModel by viewModels()
+            val viewModel: DetailsViewModel = hiltViewModel()
+            val viewModel2: FavoriteViewModel = hiltViewModel()
+            val viewModel3: SearchViewModel = hiltViewModel()
 
             val component = DefaultRootComponent(
                 context = defaultComponentContext(),
@@ -31,10 +30,10 @@ class MainActivity : ComponentActivity() {
                 showToast = {
                     Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
                 }
-
             )
             RootContent(component)
         }
     }
 }
+
 

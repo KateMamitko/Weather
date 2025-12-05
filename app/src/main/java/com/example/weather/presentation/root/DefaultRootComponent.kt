@@ -1,5 +1,7 @@
 package com.example.weather.presentation.root
 
+
+import android.os.Parcelable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
@@ -18,25 +20,25 @@ import com.example.weather.presentation.root.RootComponent.Child.Search
 import com.example.weather.presentation.search.DefaultSearchComponent
 import com.example.weather.presentation.search.OpenReason
 import com.example.weather.presentation.search.SearchViewModel
-import kotlinx.serialization.Serializable
+import kotlinx.parcelize.Parcelize
 
 class DefaultRootComponent(
     context: ComponentContext,
     val detailsViewModel: DetailsViewModel,
     val favoriteViewModel: FavoriteViewModel,
     val searchViewModel: SearchViewModel,
-    val showToast: (String) -> Unit, ) : RootComponent,
+    val showToast: (String) -> Unit,
+) : RootComponent,
     ComponentContext by context {
 
     val navigation = StackNavigation<Config>()
 
     override val stack: Value<ChildStack<*, RootComponent.Child>> = childStack(
-            source = navigation,
-            serializer = Config.serializer(),
-            initialConfiguration = Config.Favorite,
-            handleBackButton = true,
-            childFactory = ::child
-        )
+        source = navigation,
+        initialConfiguration = Config.Favorite,
+        handleBackButton = true,
+        childFactory = ::child,
+    )
 
     private fun child(config: Config, componentContext: ComponentContext): RootComponent.Child {
         return when (config) {
@@ -67,7 +69,8 @@ class DefaultRootComponent(
                     },
                     openForecast = { navigation.push(Config.Details(it)) },
                     saveToFavorite = { navigation.pop() },
-                    showErrorMessage = { showToast(it) }
+                    showErrorMessage = { showToast(it) },
+                    reason = config.openReason
                 )
             )
 
@@ -87,15 +90,15 @@ class DefaultRootComponent(
         }
     }
 
-    @Serializable
-    sealed interface Config {
-        @Serializable
+    @Parcelize
+    sealed interface Config : Parcelable {
+        @Parcelize
         data object Favorite : Config
 
-        @Serializable
+        @Parcelize
         data class Details(val city: City) : Config
 
-        @Serializable
+        @Parcelize
         data class Search(val openReason: OpenReason) : Config
     }
 }

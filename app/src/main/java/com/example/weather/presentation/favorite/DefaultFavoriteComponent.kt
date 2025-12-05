@@ -17,11 +17,11 @@ class DefaultFavoriteComponent(
 ) : FavoriteComponent,
     ComponentContext by componentContext {
 
-    private val store = instanceKeeper.getOrCreate { viewModel }
+    private val vm = instanceKeeper.getOrCreate { viewModel }
 
     init {
         componentScope().launch {
-            store.container.sideEffectFlow.collect {
+            vm.container.sideEffectFlow.collect {
                 when (it) {
                     is FavoriteSideEffect.ClickAddFavorite -> addToFavoriteComponent()
                     is FavoriteSideEffect.ClicksSearchCity -> openSearchComponent()
@@ -35,8 +35,7 @@ class DefaultFavoriteComponent(
         }
     }
 
-    override val model: StateFlow<FavoriteState>
-        get() = store.container.stateFlow
+    override val model: StateFlow<FavoriteState> = vm.container.stateFlow
 
     override fun onClickSearch() {
         viewModel.onEvent(FavoriteEvent.ClicksSearchCity)
@@ -48,6 +47,14 @@ class DefaultFavoriteComponent(
 
     override fun clickToItemCity(city: City) {
         viewModel.onEvent(FavoriteEvent.OpenDetailsInfo(city))
+    }
+
+    override fun getLocation() {
+        viewModel.getLocationAsync()
+    }
+
+    override fun load() {
+        viewModel.load()
     }
 
 }

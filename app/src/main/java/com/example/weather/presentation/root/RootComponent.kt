@@ -11,14 +11,8 @@ interface RootComponent {
     val stack: Value<ChildStack<*, Child>>
 
     sealed interface Child {
+        data class Details(val component: DetailsComponent) : Child
+        data class Search(val component: SearchComponent) : Child
         data class Favorite(val component: FavoriteComponent) : Child
-
-        data class Details(
-            val component: DetailsComponent
-        ) : Child
-
-        data class Search(
-            val component: SearchComponent
-        ) : Child
     }
 }

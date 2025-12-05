@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.StateFlow
 interface DetailsComponent {
 
     val model: StateFlow<DetailsState>
-
     fun goToBack()
     fun changeFavoriteStatus(city: City)
 
